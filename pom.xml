@@ -60,12 +60,6 @@
             <version>1.5.3</version>
         </dependency>
 
-        <!-- Snakeyaml — known to have CVEs in older versions, good for SCA check -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>2.2</version>
-        </dependency>
     </dependencies>
 
     <build>
