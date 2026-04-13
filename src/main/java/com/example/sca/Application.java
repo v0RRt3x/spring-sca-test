@@ -1,28 +1,23 @@
 package com.example.sca;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Configuration
-@ComponentScan(basePackages = "com.example.sca")
 public class Application {
 
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext context =
-                     new AnnotationConfigApplicationContext(Application.class)) {
+        GreetingService greetingService = new GreetingService();
 
-            GreetingService greetingService = context.getBean(GreetingService.class);
-            System.out.println(greetingService.greet("SCA Tool"));
+        log.info("Starting SCA Test Application");
+        System.out.println(greetingService.greet("SCA Tool"));
 
-            System.out.println("Spring Core version: " +
-                    org.springframework.core.SpringVersion.getVersion());
+        try {
+            String json = greetingService.toJson(new String[]{"jackson", "slf4j", "logback"});
+            System.out.println("Dependencies as JSON: " + json);
+        } catch (Exception e) {
+            log.error("JSON serialization failed", e);
         }
-    }
-
-    @Bean
-    public GreetingService greetingService() {
-        return new GreetingService();
     }
 }
